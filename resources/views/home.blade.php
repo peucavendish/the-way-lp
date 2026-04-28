@@ -14,7 +14,7 @@
         <nav class="hidden items-center gap-6 text-[0.9375rem] font-medium text-tw-ink-muted lg:gap-8 md:flex">
             <a href="{{ route('home') }}" class="transition hover:text-tw-accent">Início</a>
             <a href="{{ route('investidor') }}" class="transition hover:text-tw-accent">Para você</a>
-            <a href="#hub" class="transition hover:text-tw-ink">Hub Teste</a>
+            <a href="#hub" class="transition hover:text-tw-ink">Hub</a>
             <a href="#solucoes" class="transition hover:text-tw-ink">Capacidades</a>
             <a href="#historias" class="transition hover:text-tw-ink">Histórias</a>
             <a href="#contato" class="transition hover:text-tw-ink">Contato</a>

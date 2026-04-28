@@ -47,7 +47,21 @@ Entre no projeto e atualize codigo:
 
 ```bash
 cd ~/apps/the-way-lp
+git log -1 --oneline
+git status --short
+```
+
+Se houver arquivos alterados na EC2 (hotfix/manual), salve antes do pull:
+
+```bash
+git stash push -m "hotfix-ec2-before-sync"
+```
+
+Agora sincronize com o GitHub:
+
+```bash
 git pull origin main
+git log -1 --oneline
 ```
 
 Instale/atualize dependencias e gere assets:
@@ -75,6 +89,15 @@ pm2 save
 Teste:
 
 ```bash
+curl -I https://lp.altavistainvest.com.br/the-way/
+```
+
+Se retornar `502 Bad Gateway`, execute:
+
+```bash
+pm2 restart the-way-lp
+pm2 list
+ss -tulpn | grep ':3000' || true
 curl -I https://lp.altavistainvest.com.br/the-way/
 ```
 
@@ -129,11 +152,12 @@ sudo systemctl reload nginx
 ## 5) Checklist rapido de deploy
 
 1. `git push` local concluido.
-2. `git pull` na EC2 concluido.
-3. `composer install` + `npm run build`.
-4. `php artisan optimize:clear` + `config:cache`.
-5. `pm2 restart the-way-lp`.
-6. `curl -I https://lp.altavistainvest.com.br/the-way/` retornando `200` ou `302`.
+2. Commit da EC2 igual ao commit do GitHub (`git log -1 --oneline`).
+3. `git pull` na EC2 concluido (com `stash` se havia alteracao local no servidor).
+4. `composer install` + `npm run build`.
+5. `php artisan optimize:clear` + `config:cache`.
+6. `pm2 restart the-way-lp`.
+7. `curl -I https://lp.altavistainvest.com.br/the-way/` retornando `200` ou `302`.
 
 ---
 
