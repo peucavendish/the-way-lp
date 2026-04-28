@@ -1,0 +1,336 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    /* Display: mesma família com pesos mais fortes — ritmo editorial consistente */
+    --font-display: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+
+    /* Base cremosa (referência editorial tipo Segura) + accent verde */
+    --color-tw-ink: #141819;
+    --color-tw-ink-muted: #5c6560;
+    --color-tw-surface: #faf9f6;
+    --color-tw-surface-2: #f3f1eb;
+    --color-tw-border: #e8e4db;
+    --color-tw-accent: #1e6b5e;
+    --color-tw-accent-hover: #165449;
+    --color-tw-gold: #9a8b6a;
+    --color-tw-hero-veil: #eef2f0;
+
+    /* Split (dark / tech): um único ciano + tons derivados */
+    --color-tw-split-bg: #050a0a;
+    --color-tw-split-accent: #49f7d1;
+    --color-tw-split-accent-deep: #2ec4a8;
+    --color-tw-split-muted: #9eb0ac;
+    --color-tw-split-subtle: #5a6d68;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        /* Evita “flash” branco no overscroll (Safari / iOS) quando o body já tem cor */
+        background-color: var(--color-tw-surface);
+    }
+
+    body {
+        @apply bg-tw-surface text-tw-ink antialiased;
+    }
+}
+
+@layer utilities {
+    .font-display {
+        font-family: var(--font-display);
+        font-feature-settings: 'liga' 1, 'kern' 1;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .heading-hero {
+        letter-spacing: -0.045em;
+        font-weight: 800;
+    }
+
+    .heading-section {
+        letter-spacing: -0.035em;
+        font-weight: 700;
+    }
+
+    .heading-card {
+        letter-spacing: -0.02em;
+        font-weight: 600;
+    }
+
+    .wordmark {
+        letter-spacing: 0.22em;
+        font-weight: 700;
+    }
+
+    /* Página split: corpo na mesma família do display, leitura em dark */
+    .split-tech-typography {
+        font-family: var(--font-display);
+        font-feature-settings: 'liga' 1, 'kern' 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .split-hero-title {
+        letter-spacing: -0.04em;
+        font-weight: 800;
+    }
+
+    .split-hero-sub {
+        letter-spacing: 0.01em;
+        font-weight: 500;
+    }
+
+    .text-balance {
+        text-wrap: balance;
+    }
+
+    .grain {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    }
+
+    /* Curvas suaves no hero (eco do banner da Segura) */
+    .hero-segura-bg {
+        background-color: var(--color-tw-surface);
+        background-image:
+            radial-gradient(ellipse 80% 55% at 100% 20%, var(--color-tw-hero-veil) 0%, transparent 55%),
+            radial-gradient(ellipse 60% 45% at 0% 80%, rgba(30, 107, 94, 0.06) 0%, transparent 50%);
+    }
+
+    .segura-pillars {
+        font-size: 0.8125rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--color-tw-ink-muted);
+    }
+
+    .segura-eyebrow {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--color-tw-accent);
+        line-height: 1.6;
+    }
+
+    /* Home split — visual tech / futurista (ciano #49f7d1 + base #050a0a) */
+    .split-tech-bg {
+        background-color: var(--color-tw-split-bg);
+        background-image:
+            radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+            radial-gradient(ellipse 120% 70% at 50% -28%, rgba(73, 247, 209, 0.14), transparent 58%),
+            radial-gradient(ellipse 55% 42% at 100% 78%, rgba(73, 247, 209, 0.05), transparent 48%),
+            radial-gradient(ellipse 48% 38% at 0% 55%, rgba(46, 196, 168, 0.06), transparent 42%),
+            linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+        background-size:
+            28px 28px,
+            auto,
+            auto,
+            auto,
+            56px 56px,
+            56px 56px;
+        background-position: center, center, center, center, center, center;
+    }
+
+    .split-tech-aurora {
+        position: absolute;
+        inset: -25% -15% -15% -15%;
+        z-index: 0;
+        pointer-events: none;
+        background:
+            radial-gradient(ellipse 55% 45% at 15% 22%, rgba(73, 247, 209, 0.2), transparent 56%),
+            radial-gradient(ellipse 50% 42% at 88% 68%, rgba(46, 196, 168, 0.12), transparent 52%),
+            radial-gradient(ellipse 45% 38% at 52% 96%, rgba(73, 247, 209, 0.08), transparent 55%);
+        filter: blur(48px);
+        opacity: 0.92;
+        animation: split-aurora-drift 22s ease-in-out infinite alternate;
+    }
+
+    @keyframes split-aurora-drift {
+        0% {
+            transform: translate(0, 0) scale(1);
+        }
+        100% {
+            transform: translate(3%, -4%) scale(1.06);
+        }
+    }
+
+    .split-tech-grain {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.4;
+        mix-blend-mode: overlay;
+    }
+
+    .split-tech-scan {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        background: linear-gradient(
+            180deg,
+            transparent 0%,
+            rgba(73, 247, 209, 0.035) 48%,
+            transparent 52%
+        );
+        background-size: 100% 220%;
+        animation: split-scan 7s ease-in-out infinite;
+        pointer-events: none;
+    }
+
+    @keyframes split-scan {
+        0%,
+        100% {
+            background-position: 0 0;
+        }
+        50% {
+            background-position: 0 100%;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .split-tech-scan {
+            animation: none;
+        }
+
+        .split-tech-aurora {
+            animation: none;
+        }
+
+        .split-card:hover {
+            transform: none;
+        }
+
+        .split-reveal {
+            animation: none;
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    @keyframes split-fade-up {
+        from {
+            opacity: 0;
+            transform: translateY(18px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .split-reveal {
+        animation: split-fade-up 0.75s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    }
+
+    .split-reveal-delay-1 {
+        animation-delay: 0.06s;
+    }
+
+    .split-reveal-delay-2 {
+        animation-delay: 0.12s;
+    }
+
+    .split-reveal-delay-3 {
+        animation-delay: 0.18s;
+    }
+
+    .split-reveal-delay-4 {
+        animation-delay: 0.24s;
+    }
+
+    .split-reveal-delay-5 {
+        animation-delay: 0.32s;
+    }
+
+    .split-reveal-delay-6 {
+        animation-delay: 0.4s;
+    }
+
+    .split-card-shine {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        border-radius: inherit;
+        opacity: 0;
+        transition: opacity 0.35s ease;
+        background: radial-gradient(
+            420px circle at var(--sx, 50%) var(--sy, 38%),
+            rgba(73, 247, 209, 0.14),
+            transparent 52%
+        );
+        pointer-events: none;
+    }
+
+    .split-card:hover .split-card-shine,
+    .split-card:focus-visible .split-card-shine {
+        opacity: 1;
+    }
+
+    .split-card {
+        position: relative;
+        border-radius: 1.25rem;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        transition:
+            border-color 0.35s ease,
+            background-color 0.35s ease,
+            box-shadow 0.35s ease,
+            transform 0.35s ease;
+    }
+
+    .split-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(
+            135deg,
+            rgba(73, 247, 209, 0.32),
+            transparent 40%,
+            transparent 60%,
+            rgba(46, 196, 168, 0.22)
+        );
+        mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        -webkit-mask-composite: xor;
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    .split-card:hover {
+        border-color: rgba(73, 247, 209, 0.32);
+        background: rgba(255, 255, 255, 0.06);
+        box-shadow:
+            0 0 0 1px rgba(73, 247, 209, 0.1),
+            0 24px 48px -24px rgba(0, 0, 0, 0.5),
+            0 0 80px -30px rgba(73, 247, 209, 0.14);
+        transform: translateY(-2px);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .inv-passo-card {
+            transition: none;
+        }
+    }
+
+    .inv-interface-capture-frame {
+        aspect-ratio: 16 / 10;
+    }
+}
